@@ -1,13 +1,13 @@
 @extends('layouts.user.app')
 
-@section('title', 'Home')
+@section('title', __('messages.user.home.title'))
 
-@section('breadcrumn')
-	<li class="breadcrumb-item active">Home</li>
-@endsection
+@section('breadcrumn') @endsection
 
 @section('content')
-<div class="row">
-	
-</div>
+<section class="section dashboard">
+	<div class="row">
+		
+	</div>
+</section>
 @endsection

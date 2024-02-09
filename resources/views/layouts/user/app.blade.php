@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>{{config('app.name')}} - @yield('title')</title>
+  <title>@setting('app_name') - @yield('title')</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -19,12 +19,16 @@
 
   <!-- Vendor CSS Files -->
   <link href="{{asset('assets/user/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/user/assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-  <link href="{{asset('assets/user/assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  {{--<link href="{{asset('assets/user/assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/user/assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">--}}
+  
   <link href="{{asset('assets/user/assets/vendor/quill/quill.snow.css')}}" rel="stylesheet">
   <link href="{{asset('assets/user/assets/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{asset('assets/user/assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
   <link href="{{asset('assets/user/assets/vendor/simple-datatables/style.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/user/assets/vendor/toastr/toastr.css')}}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="{{asset('assets/user/assets/css/style.css')}}" rel="stylesheet">
@@ -40,45 +44,13 @@
 
 <body>
 
-  <!-- ======= Header ======= -->
-    @include('layouts.user.header')
-  <!-- End Header -->
+  @guest('web')
+    @include('layouts.user.guest')
+  @endguest
 
-  <!-- ======= Sidebar ======= -->
-    @include('layouts.user.sidebar')
-  <!-- End Sidebar-->
-
-  <!-- ======= #Main ======= -->
-  <main id="main" class="main">
-
-    <!-- ======= Page Title ======= -->
-      <div class="pagetitle">
-        <h1>@yield('title')</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            @yield('breadcrumn')
-          </ol>
-        </nav>
-      </div>
-    <!-- End Page Title -->
-
-    @yield('note')
-
-    <section @class(["section",  "dashboard" => request()->url() == route('users.home')])>
-
-      @yield('content')
-      
-    </section>
-
-  </main>
-  <!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-    @include('layouts.user.footer')
-  <!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  @auth('web')
+    @include('layouts.user.auth')
+  @endauth
 
   <!-- Vendor JS Files -->
   <script src="{{asset('assets/user/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
@@ -89,9 +61,11 @@
   <script src="{{asset('assets/user/assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
   <script src="{{asset('assets/user/assets/vendor/tinymce/tinymce.min.js')}}"></script>
   <script src="{{asset('assets/user/assets/vendor/php-email-form/validate.js')}}"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="{{asset('assets/user/assets/vendor/toastr/toastr.js')}}"></script>
   <!-- Template Main JS File -->
   <script src="{{asset('assets/user/assets/js/main.js')}}"></script>
+  @include('layouts.user.script')
 
 </body>
 
