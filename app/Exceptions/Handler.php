@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 
 class Handler extends ExceptionHandler
 {
@@ -25,6 +26,15 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (ThrottleRequestsException $e, $request) {
+            $error =  __('messages.user.errors.too_many_attempts');
+            if ($request->expectsJson()) {
+                return response()->json(['message' => $error], 429);
+            } else {
+                return redirect()->back()->with('error', $error);
+            }
         });
     }
 }

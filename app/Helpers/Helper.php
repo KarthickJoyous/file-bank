@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class Helper {
@@ -32,6 +33,8 @@ class Helper {
 	 * 
 	 * @param string
 	 * 
+	 * @param string
+	 * 
 	 * @return bool
 	*/
 	public static function delete_file($url, $folder_path): bool 
@@ -42,4 +45,31 @@ class Helper {
 
         return Storage::disk($disk)->delete($path);
     }
+
+	/**
+	 * To generate a verification code & verification code expiry.
+	 * 
+	 * @return array
+	*/
+	public static function generate_verification_code(): array {
+
+		return [
+			'verification_code' => self::generateOTP(),
+			'verification_code_expiry' => time() + (config('app.otp_expiry_in_minutes') * 60)
+		];
+	}
+
+	/**
+	 * To generate a OTP code.
+	 * 
+	 * @return string
+	*/
+	public static function generateOTP($digits = 6): string {
+
+		$numbers = Arr::shuffle(range(0, 9));
+
+		$otp = Arr::random($numbers, $digits);
+
+		return Arr::join($otp, "");
+	}
 }

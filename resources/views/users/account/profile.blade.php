@@ -11,7 +11,7 @@
 @section('content')
 <section class="section profile">
 	<div class="row">
-        <div class="col-xl-4">
+        {{--<div class="col-xl-4">
 
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
@@ -22,19 +22,19 @@
               	class="rounded-circle"
               >
               <h2>{{auth('web')->user()->name}}</h2>
-              {{--<h3>{{auth('web')->user()->email}}</h3>--}}
-              {{--<div class="social-links mt-2">
+              <h3>{{auth('web')->user()->email}}</h3>
+              <div class="social-links mt-2">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-              </div>--}}
+              </div>
             </div>
           </div>
 
-        </div>
+        </div>--}}
 
-        <div class="col-xl-8">
+        <div class="col-xl-12">
 
           <div class="card">
             <div class="card-body pt-3">
@@ -89,6 +89,19 @@
                     <div class="col-lg-9 col-md-8">{{auth('web')->user()->email ?? __('messages.user.common.na')}}</div>
                   </div>
 
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">{{__('messages.user.profile.avatar')}}</div>
+                    <div class="col-lg-9 col-md-8">
+                    <img 
+                        src="{{auth('web')->user()->avatar ?: asset('assets/placegolders/user/avatar.png')}}" 
+                        alt="{{auth('web')->user()->name}}"
+                        class="img-thumbnail"
+                        height="80"
+                        width="80"
+                      >
+                    </div>
+                  </div>
+
                 </div>
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
@@ -109,7 +122,7 @@
                         >
                         <div class="pt-2">
                           {{--<a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>--}}
-                          	<input class="form-control" id="avatar" name="avatar" type="file" accept=".jpg, .jpeg, .png">
+                          	<input class="form-control @error('avatar') is-invalid @enderror" id="avatar" name="avatar" type="file" accept=".jpg, .jpeg, .png">
                           {{--<a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>--}}
                         </div>
                       </div>
@@ -120,7 +133,7 @@
                       	{{__('messages.user.profile.name')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="name" type="text" class="form-control" id="name" value="{{auth('web')->user()->name}}" required>
+                        <input name="name" type="text" class="form-control @error('avatar') is-invalid @enderror" id="name" value="{{Old('name', auth('web')->user()->name)}}" required>
                       </div>
                     </div>
 
@@ -129,7 +142,7 @@
                       	{{__('messages.user.profile.email')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="email" value="{{auth('web')->user()->email}}" required>
+                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{Old('email', auth('web')->user()->email)}}" required>
                       </div>
                     </div>
 
@@ -138,7 +151,7 @@
                       	{{__('messages.user.profile.mobile')}}
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="mobile" type="text" class="form-control" id="mobile" value="{{auth('web')->user()->mobile}}">
+                        <input name="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" id="mobile" value="{{Old('mobile', auth('web')->user()->mobile)}}">
                       </div>
                     </div>
 
@@ -147,7 +160,7 @@
                       	{{__('messages.user.profile.about')}}
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">{{auth('web')->user()->about}}</textarea>
+                        <textarea name="about" class="form-control @error('about') is-invalid @enderror" id="about" style="height: 100px">{{Old('about', auth('web')->user()->about)}}</textarea>
                       </div>
                     </div>
 
@@ -178,9 +191,11 @@
                         <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
                       </div>
                     </div>--}}
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary" id="userUpdateProfileBtn">{{__('messages.user.profile.save_changes')}}</button>
+                    
+                    <div class="d-flex justify-content-end">
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary" id="userUpdateProfileBtn">{{__('messages.user.profile.save_changes')}}</button>
+                      </div>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -240,7 +255,10 @@
                         {{__('messages.user.profile.current_password')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="current_password" type="password" class="form-control" id="currentPassword" required>
+                        <input name="current_password" type="password" 
+                        class="form-control @if(session('password_error') || $errors->has('current_password')) is-invalid @endif"
+                        id="currentPassword"
+                        required>
                       </div>
                     </div>
 
@@ -249,7 +267,7 @@
                         {{__('messages.user.profile.password')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="password" required>
+                        <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="password" required>
                       </div>
                     </div>
 
@@ -258,14 +276,16 @@
                         {{__('messages.user.profile.password_confirmation')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password_confirmation" type="password" class="form-control" id="passwordConfirmation" required>
+                        <input name="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="passwordConfirmation" required>
                       </div>
                     </div>
 
-                    <div class="text-center">
-                      <button type="submit" id="userChangePasswordBtn"  class="btn btn-primary">
-                        {{__('messages.user.profile.change_password')}}
-                      </button>
+                    <div class="d-flex justify-content-end ">
+                      <div class="text-center">
+                        <button type="submit" id="userChangePasswordBtn"  class="btn btn-primary">
+                          {{__('messages.user.profile.change_password')}}
+                        </button>
+                      </div>
                     </div>
                   </form><!-- End Change Password Form -->
 
@@ -277,7 +297,7 @@
           </div>
 
         </div>
-      </div>
+  </div>
 </section>
 @endsection
 

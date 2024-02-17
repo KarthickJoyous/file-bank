@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\User\Account;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests\User\Account\{UserUpdateProfileRequest, ChangePasswordRequest};
 use App\Helpers\Helper;
-use DB, Exception, Hash;
+use Exception, Hash;
+use Illuminate\Http\{Request, RedirectResponse};
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\User\Account\{UserUpdateProfileRequest, ChangePasswordRequest};
 
 class UserProfileController extends Controller
 {
@@ -22,8 +23,10 @@ class UserProfileController extends Controller
      * To update the user profile details.
      * 
      * @param UserUpdateProfileRequest $request
+     * 
+     * @return RedirectResponse
     */
-    public function update_profile(UserUpdateProfileRequest $request)
+    public function update_profile(UserUpdateProfileRequest $request): RedirectResponse
     {
         try {
 
@@ -58,7 +61,14 @@ class UserProfileController extends Controller
         }
     }
 
-    public function change_password(ChangePasswordRequest $request) {
+    /**
+     * To update the user password.
+     * 
+     * @param ChangePasswordRequest $request
+     * 
+     * @return RedirectResponse
+    */
+    public function change_password(ChangePasswordRequest $request): RedirectResponse {
 
         try {
 
@@ -94,7 +104,7 @@ class UserProfileController extends Controller
 
             DB::rollback();
 
-            return redirect()->back()->with('error', $e->getMessage());   
+            return redirect()->back()->with('error', $e->getMessage())->with('password_error', true);
         }
     }
 }

@@ -44,13 +44,11 @@
 
 <body>
 
-  @guest('web')
-    @include('layouts.user.guest')
-  @endguest
-
-  @auth('web')
-    @include('layouts.user.auth')
-  @endauth
+  @authorized
+    @include('layouts.user.authorized')
+  @else
+    @include('layouts.user.unauthorized')
+  @endauthorized
 
   <!-- Vendor JS Files -->
   <script src="{{asset('assets/user/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>

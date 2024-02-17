@@ -128,6 +128,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | OTP Expiry Time (In Minutes)
+    |--------------------------------------------------------------------------
+    |
+    | Set the 'otp_expiry_in_minutes' key to define the expiration time for One-Time Passwords (OTP) in seconds. 
+    | Adjust the value as needed, keeping in mind the balance between security and user convenience. 
+    | 
+    | 
+    |
+    */
+
+    'otp_expiry_in_minutes' => env('OTP_EXPIRY_IN_MINUTES', 1),
+
+    /*
+    |--------------------------------------------------------------------------
     | Maintenance Mode Driver
     |--------------------------------------------------------------------------
     |

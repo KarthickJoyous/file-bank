@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User\Account;
+namespace App\Http\Requests\User\EmailVerification;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use Illuminate\Validation\Rules\Password;
-
-class ChangePasswordRequest extends FormRequest
+class VerifyEmailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +22,7 @@ class ChangePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_password' => ['required', Password::defaults()],
-            'password' => ['required', 'confirmed', Password::defaults()]
+            'verification_code' => ['required', 'exists:users,verification_code,id,'.auth('web')->id()]
         ];
     }
 }

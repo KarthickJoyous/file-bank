@@ -74,14 +74,14 @@
         <button 
           type="button" 
           class="btn btn-primary" 
+          id="logoutFormBtn"
           onclick="
-          this.disabled=true; 
-          this.innerHTML='{{__("messages.user.logout.submit_btn_loading_text")}}';
+          handleBaseFormSubmit('logoutForm', '{{__("messages.user.logout.submit_btn_loading_text")}}');
           document.getElementById('logoutForm').submit();"
           >
           {{__('messages.user.logout.title')}}
         </button>
-        <form class="d-none" method="POST" id="logoutForm" action="{{route('user.logout')}}">
+        <form class="d-none" method="GET" id="logoutForm" action="{{route('user.logout')}}">
           @csrf
         </form>
       </div>

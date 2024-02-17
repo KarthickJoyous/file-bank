@@ -1,6 +1,7 @@
 <script type="text/javascript">
 	$(".password").keypress(function(e) {
 		if(e.keyCode == 32) {
+			notify("error", "{{__('messages.user.login.password_space_validation_message')}}");
 			return false;
 		}
 	});
@@ -52,9 +53,10 @@
 	  @endif
 	// Notification
 
-	function handleBaseFormSubmit(formName, loadingText) {
-		$(`#${formName}Btn`).attr('disabled', true);
-		$(`#${formName}Btn`).text(loadingText);
+	function handleBaseFormSubmit(formId, loadingText) {
+		$(`#${formId}Btn`).attr('disabled', true);
+		$(`#${formId}Btn`).text(loadingText);
+		$(`#${formId}Btn`).append(`<span class="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span>`);
 	}
 </script>
 

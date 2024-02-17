@@ -18,11 +18,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('mobile')->nullable();
             $table->string('avatar')->default(asset('placeholders/user/avatar.png'));
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('about')->nullable();
             $table->rememberToken();
+            $table->string('verification_code')->nullable();
+            $table->string('verification_code_expiry')->nullable();
+            $table->tinyInteger('email_status')->default(EMAIL_NOT_VERIFIED);
+            $table->tinyInteger('tfa_status')->default(DISABLED);
             $table->tinyInteger('status')->default(APPROVED);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('last_password_reset_at')->nullable();
             $table->timestamps();
         });
     }

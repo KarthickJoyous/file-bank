@@ -33,12 +33,12 @@
     </div>
   </div>
   <div class="col-12">
-    <button id="loginBtn" class="btn btn-primary w-100" type="submit">
+    <button id="loginFormBtn" class="btn btn-primary w-100" type="submit">
       {{__('messages.user.login.submit_btn')}}
     </button>
   </div>
   <div class="col-12">
-    <p class="small mb-0">{{__('messages.user.login.register_note')}} 
+    <p class="small mb-0">{{__('messages.user.login.register_note')}}
       <a href="{{route('user.registerForm')}}">
         {{__('messages.user.login.register_btn')}}
       </a>
@@ -51,8 +51,9 @@
   <script type="text/javascript">
     $("#loginForm").on("submit", function() {
       if($("#email").val() && $("#password").val().length >= 8) {
-        $("#loginBtn").attr("disabled", true);
-        $("#loginBtn").text("{{__('messages.user.login.submit_btn_loading_text')}}");
+        // $("#loginFormBtn").attr("disabled", true);
+        // $("#loginFormBtn").text("{{__('messages.user.login.submit_btn_loading_text')}}");
+        handleBaseFormSubmit("loginForm", "{{__('messages.user.login.submit_btn_loading_text')}}");
       }
     });
   </script>

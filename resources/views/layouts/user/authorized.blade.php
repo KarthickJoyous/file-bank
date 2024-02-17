@@ -23,9 +23,7 @@
 
 @yield('note')
 
-<section @class(["section",  "dashboard" => request()->url() == route('user.dashboard')])>
-  @yield('content')
-</section>
+@yield('content')
 
 </main>
 <!-- End #main -->
