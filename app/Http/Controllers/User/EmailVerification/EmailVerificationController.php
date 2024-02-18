@@ -6,12 +6,11 @@ use Exception;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
-use App\Mail\EmailVerificationCode;
+use App\Mail\{EmailVerificationCode, EmailVerified};
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\{Request, RedirectResponse};
 use App\Http\Requests\User\EmailVerification\VerifyEmailRequest;
-use PhpParser\Node\Expr;
 
 class EmailVerificationController extends Controller
 {
@@ -75,6 +74,8 @@ class EmailVerificationController extends Controller
             throw_if(!$result, new Exception(__('messages.user.email_verification.verificaion_failed')));
 
             DB::commit();
+
+            Mail::to($user)->send(new EmailVerified($user));
 
             return redirect()->route('user.dashboard')->with('success',__('messages.user.email_verification.verificaion_success'));
 

@@ -29,7 +29,7 @@ class EmailVerificationCode extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('messages.user.emails.email_verification.code_for_email_verification_subject'),
+            subject: __('messages.user.emails.email_verification.subject'),
         );
     }
 
@@ -58,7 +58,7 @@ class EmailVerificationCode extends Mailable implements ShouldQueue
                 'name' => $this->user->name,
                 'url' => config('app.url'),
                 'verification_code' => $verification_code,
-                'body' => trans_choice('messages.user.emails.email_verification.code_for_email_verification_body', config('app.otp_expiry_in_minutes'))
+                'body' => trans_choice('messages.user.emails.email_verification.body', config('app.otp_expiry_in_minutes'))
             ]
         );
     }

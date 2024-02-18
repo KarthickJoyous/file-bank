@@ -38,23 +38,21 @@ Route::group(['as' => 'user.'], function() {
 		});
 	});
 
-	Route::group(['middleware' => 'auth:web'], function() {
+	Route::group(['middleware' => ['auth:web'] ], function() {
 
-		Route::group(['middleware' => ['guest:web', 'throttle:5']], function() {
+		Route::group(['middleware' => ['emailVerified', 'throttle:5']], function() {
 
 			Route::controller(EmailVerificationController::class)->group(function () {
 
 				Route::get('verify_email', 'verifyEmailForm')->name('verifyEmailForm');
 
-				Route::get('verification_code', 'verification_code');
+				Route::get('verification_code', 'verification_code')->name('verification_code');
 
-				Route::post('verify_email', 'verify_email');
+				Route::post('verify_email', 'verify_email')->name('verify_email');
 			});
 		});
 
-		Route::get('logout', LogoutController::class)->name('logout');
-
-		Route::group(['middleware' => 'emailVerified'], function() {
+		Route::group(['middleware' => ['appVerification']], function() {
 
 			Route::get('', HomeController::class)->name('dashboard');
 
@@ -66,6 +64,8 @@ Route::group(['as' => 'user.'], function() {
 
 				Route::post('change_password', 'change_password')->name('change_password');
 			});
+
+			Route::get('logout', LogoutController::class)->name('logout');
 		});
 	});
 });

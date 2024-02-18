@@ -62,11 +62,11 @@
 @section('script')
   <script type="text/javascript">
     $("#createAccount").on("submit", function() {
-      if($("#name").val() && $("#email").val() && $("#password").val().length >= 8 && $("#confirmPassword").val().length >= 8) {
-        // $("#createAccountBtn").attr("disabled", true);
-        // $("#createAccountBtn").text("{{__('messages.user.register.submit_btn_loading_text')}}");
+      var validated = $("#name").val().length >= 3 && $("#email").val() && $("#password").val().length >= 8 && $("#confirmPassword").val().length >= 8;
+      if(validated) {
         handleBaseFormSubmit("createAccount", "{{__('messages.user.register.submit_btn_loading_text')}}");
       }
+      return validated;
     });
   </script>
 @endsection

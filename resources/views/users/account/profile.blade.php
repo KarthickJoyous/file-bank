@@ -107,8 +107,13 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form method="POST" id="userUpdateProfileForm" action="{{route('user.update_profile')}}" enctype="multipart/form-data" 
-                  onsubmit="handleBaseFormSubmit('userUpdateProfile', '{{__("messages.user.profile.update_profile_submit_btn_loading_text")}}')">
+                  <form method="POST" 
+                    class="needs-validation" 
+                    id="userUpdateProfileForm" 
+                    action="{{route('user.update_profile')}}" 
+                    enctype="multipart/form-data"
+                    novalidate
+                  >
                   	@csrf
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">
@@ -133,7 +138,8 @@
                       	{{__('messages.user.profile.name')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="name" type="text" class="form-control @error('avatar') is-invalid @enderror" id="name" value="{{Old('name', auth('web')->user()->name)}}" required>
+                        <input name="name"  minlength="3" maxlength="30" type="text" class="form-control @error('avatar') is-invalid @enderror" id="name" value="{{Old('name', auth('web')->user()->name)}}" required>
+                        <div class="invalid-feedback">{{__('messages.user.profile.name_invalid_feedback')}}</div>
                       </div>
                     </div>
 
@@ -142,7 +148,8 @@
                       	{{__('messages.user.profile.email')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{Old('email', auth('web')->user()->email)}}" required>
+                        <input readonly name="email" maxlength="50" type="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{Old('email', auth('web')->user()->email)}}" required>
+                        <div class="invalid-feedback">{{__('messages.user.profile.email_invalid_feedback')}}</div>
                       </div>
                     </div>
 
@@ -245,20 +252,25 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form method="POST" id="userChangePasswordForm" 
-                  action="{{route('user.change_password')}}" enctype="multipart/form-data" 
-                  onsubmit="handleBaseFormSubmit('userChangePassword', '{{__("messages.user.profile.change_password_submit_btn_loading_text")}}')">
+                  <form 
+                  method="POST" 
+                  id="userChangePasswordForm" 
+                  action="{{route('user.change_password')}}"
+                  class="needs-validation"
+                  novalidate
+                  >
                     @csrf
 
                     <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">
+                      <label for="current_password" class="col-md-4 col-lg-3 col-form-label">
                         {{__('messages.user.profile.current_password')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
                         <input name="current_password" type="password" 
                         class="form-control @if(session('password_error') || $errors->has('current_password')) is-invalid @endif"
-                        id="currentPassword"
+                        id="current_password" minlength="8" maxlength="25"
                         required>
+                        <div class="invalid-feedback">{{__('messages.user.profile.current_password_invalid_feedback')}}</div>
                       </div>
                     </div>
 
@@ -267,16 +279,18 @@
                         {{__('messages.user.profile.password')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="password" required>
+                        <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="password" minlength="8" maxlength="25" required>
+                        <div class="invalid-feedback">{{__('messages.user.profile.password_invalid_feedback')}}</div>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="passwordConfirmation" class="col-md-4 col-lg-3 col-form-label"> 
+                      <label for="password_confirmation" class="col-md-4 col-lg-3 col-form-label"> 
                         {{__('messages.user.profile.password_confirmation')}} *
                       </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="passwordConfirmation" required>
+                        <input name="password_confirmation" type="password" class="form-control @error('password') is-invalid @enderror" id="password_confirmation" minlength="8" maxlength="25" required>
+                        <div class="invalid-feedback">{{__('messages.user.profile.password_confirmation_invalid_feedback')}}</div>
                       </div>
                     </div>
 
@@ -309,5 +323,21 @@
         avatarPreview.src = URL.createObjectURL(file);
       }
     }
+
+    $("#userUpdateProfileForm").on('submit', function() {
+      var validated = $("#name").val().length >= 3 && $("#email").val();
+      if(validated) {
+        handleBaseFormSubmit('userUpdateProfile', '{{__("messages.user.profile.update_profile_submit_btn_loading_text")}}')
+      }
+      return validated;
+    });
+
+    $("#userChangePasswordForm").on('submit', function() {
+      var validated = $("#current_password").val().length >= 8 && $("#password").val().length >= 8 && $("#password_confirmation").val().length >= 8;
+      if(validated) {
+        handleBaseFormSubmit('userChangePassword', '{{__("messages.user.profile.change_password_submit_btn_loading_text")}}')
+      }
+      return validated;
+    });
   </script>
 @endsection

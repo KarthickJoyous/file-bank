@@ -1,9 +1,9 @@
 <x-mail::message>
 # {{ __('messages.user.emails.email_verification.welcome_note', ['name' => $name]) }}
 
-{{ __('messages.user.emails.email_verification.verification_code_preview_sub_title') }}
+{{ __('messages.user.emails.email_verification.sub_title') }}
 
-{{ __('messages.user.emails.email_verification.verification_code_preview_title')}} {{$verification_code}}
+{{ __('messages.user.emails.email_verification.title')}} {{$verification_code}}
 
 {{$body}}
 

@@ -107,15 +107,20 @@ return [
 			"avatar" => "Avatar",
 			"save_changes" => "Save Changes",
 			"update_profile_submit_btn_loading_text" => "Saving Changes...",
+			"name_invalid_feedback" => "Please enter your name!",
+			"email_invalid_feedback" => "Please enter your email!",
 			"updation_failed" => "Profile updation failed. Please try again.",
 			"updation_success" => "Profile updated.",
 			"avatar_updation_failed" => "Avatar updation failed. Please try again.",
 			"current_password" => "Current Password",
-			"password" => "Password",
+			"password" => "New Password",
 			"password_confirmation" => "Password Confirmation",
 			"password_incorrect" => "Current password is incorrect.",
 			"password_repeat_error" => "New password can't be same as current password.",
 			"change_password_submit_btn_loading_text" => "Changing Password...",
+			"current_password_invalid_feedback" => "Please enter your current password.",
+			"password_invalid_feedback" => "Please enter the new password.",
+			"password_confirmation_invalid_feedback" => "Please enter the password confirmation.",
 			"change_password_failed" => "Change password failed. Please try again.",
 			"change_password_success" => "Password changed. Please login."
 		],
@@ -131,13 +136,19 @@ return [
 		"emails" => [
 			"email_verification" => [
 				"welcome_note" => "Hello :name,",
-				"code_for_email_verification_subject" => "Email Verification Code",
-				"code_for_email_verification_body" => "{1} This code is valid for the next :count minute. Please use it to complete the email verification process. If you didn't initiate this request, kindly disregard this email. |[2,*] This code is valid for the next :count minutes. Please use it to complete the email verification process. If you didn't initiate this request, kindly disregard this email.",
-				"verification_code_preview_sub_title" => "Here is your verification code:",
-				"verification_code_preview_title" => "Verification Code: ",
+				"subject" => "Email Verification Code",
+				"body" => "{1} This code is valid for the next :count minute. Please use it to complete the email verification process. If you didn't initiate this request, kindly disregard this email. |[2,*] This code is valid for the next :count minutes. Please use it to complete the email verification process. If you didn't initiate this request, kindly disregard this email.",
+				"sub_title" => "Here is your verification code:",
+				"title" => "Verification Code: ",
+				"btn_text" => "Visit Website"
+			],
+			
+			"email_verified" => [
+				"welcome_note" => "Hello :name,",
+				"subject" => "Email Verified",
+				"body" => "Your email has been successfully verified.",
 				"btn_text" => "Visit Website"
 			]
-			
 		]
 	]
 ];
