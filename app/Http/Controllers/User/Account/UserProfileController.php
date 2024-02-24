@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\User\Account;
 
 use App\Helpers\Helper;
-use Exception, Hash;
-use Illuminate\Http\{Request, RedirectResponse};
+use Exception;
+use Illuminate\Http\{RedirectResponse};
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\Account\{UserUpdateProfileRequest, ChangePasswordRequest};
+use App\Http\Requests\User\Account\{UserUpdateProfileRequest};
 
 class UserProfileController extends Controller
 {
@@ -58,53 +58,6 @@ class UserProfileController extends Controller
             DB::rollback();
 
             return redirect()->back()->with('error', $e->getMessage());
-        }
-    }
-
-    /**
-     * To update the user password.
-     * 
-     * @param ChangePasswordRequest $request
-     * 
-     * @return RedirectResponse
-    */
-    public function change_password(ChangePasswordRequest $request): RedirectResponse {
-
-        try {
-
-            $user = auth('web')->user();
-
-            throw_if(!Hash::check($request->current_password, $user->password), 
-                new Exception(__('messages.user.profile.password_incorrect'))
-            );
-
-            throw_if($request->current_password == $request->password, 
-                new Exception(__('messages.user.profile.password_repeat_error'))
-            );
-
-            DB::beginTransaction();
-
-            $result = $user->update($request->only('password'));
-
-            throw_if(!$result, new Exception(__('messages.user.profile.change_password_failed')));
-
-            DB::commit();
-
-            auth('web')->logout();
- 
-            $request->session()->invalidate();
-         
-            $request->session()->regenerateToken();
-
-            return redirect()
-            ->route('user.login')
-            ->with('success', __('messages.user.profile.change_password_success'));
-
-        } catch(Exception $e) {
-
-            DB::rollback();
-
-            return redirect()->back()->with('error', $e->getMessage())->with('password_error', true);
         }
     }
 }

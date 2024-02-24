@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use Exception;
 use App\Helpers\Helper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -11,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailVerificationCode extends Mailable implements ShouldQueue
+class TfaVerificationCode extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +28,7 @@ class EmailVerificationCode extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('messages.user.emails.email_verification.subject'),
+            subject: __('messages.user.emails.tfa_verification.subject'),
         );
     }
 
@@ -37,19 +36,18 @@ class EmailVerificationCode extends Mailable implements ShouldQueue
      * Get the message content definition.
      */
     public function content(): Content
-    {   
-
+    {
         $email_verification = (new Helper)->generate_verification_code();
 
         $this->user->update($email_verification);
 
         return new Content(
-            markdown: 'mail.users.email_verification_code',
+            markdown: 'mail.users.tfa_verification_code',
             with: [
                 'name' => $this->user->name,
                 'url' => config('app.url'),
                 'verification_code' => $email_verification['verification_code'],
-                'body' => trans_choice('messages.user.emails.email_verification.body', config('app.otp_expiry_in_minutes'))
+                'body' => trans_choice('messages.user.emails.tfa_verification.body', config('app.otp_expiry_in_minutes'))
             ]
         );
     }

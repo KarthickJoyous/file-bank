@@ -53,15 +53,21 @@
                   </button>
                 </li>
 
-                {{--<li class="nav-item">
+                <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">
                   	{{__('messages.user.profile.settings')}}
                   </button>
-                </li>--}}
+                </li>
 
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
                   	{{__('messages.user.profile.change_password')}}
+                  </button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-delete-account">
+                  	{{__('messages.user.profile.delete_account')}}
                   </button>
                 </li>
 
@@ -204,51 +210,41 @@
                         <button type="submit" class="btn btn-primary" id="userUpdateProfileBtn">{{__('messages.user.profile.save_changes')}}</button>
                       </div>
                     </div>
-                  </form><!-- End Profile Edit Form -->
+                  </form>
+                  <!-- End Profile Edit Form -->
 
                 </div>
 
-                {{--<div class="tab-pane fade pt-3" id="profile-settings">
+                <div class="tab-pane fade pt-3" id="profile-settings">
 
-                  <!-- Settings Form -->
-                  <form>
-
+                  <!-- Settings Section -->
                     <div class="row mb-3">
-                      <label for="name" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+                      <label for="name" class="col-md-4 col-lg-3 col-form-label">
+                        {{__('messages.user.profile.tfa_status')}}
+                      </label>
                       <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
+                        <div class="form-check form-switch">
+                          @php
+                            $tfa_status = auth('web')->user()->tfa_status;
+                          @endphp
+                          <input 
+                            class="form-check-input"
+                            type="checkbox" 
+                            id="tfaStatus"
+                            value="{{ENABLED}}"
+                            {{ $tfa_status ? 'checked' : ''}}
+                          >
+                          <label class="form-check-label" for="tfaStatus">
+                            <span id="tfaStatusBadge" class="badge bg-{{$tfa_status ? 'success' : 'warning'}}">
+                            {{$tfa_status ? __('messages.user.common.enabled') : __('messages.user.common.disabled') }}
+                          </span>
+                        </label>
                         </div>
                       </div>
                     </div>
+                    <!-- End settings Section -->
 
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End settings Form -->
-
-                </div>--}}
+                </div>
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
@@ -301,7 +297,45 @@
                         </button>
                       </div>
                     </div>
-                  </form><!-- End Change Password Form -->
+                  </form>
+                  <!-- End Change Password Form -->
+
+                </div>
+
+                <div class="tab-pane fade pt-3" id="profile-delete-account">
+                  <!-- Delete Account Form -->
+                  <form 
+                  method="POST" 
+                  id="userDeleteAccountForm" 
+                  action="{{route('user.delete_account')}}"
+                  class="needs-validation"
+                  novalidate
+                  >
+                    @csrf
+                    @method('delete')
+
+                    <div class="row mb-3">
+                      <label for="password" class="col-md-4 col-lg-3 col-form-label">
+                        {{__('messages.user.profile.delete_account_password')}} *
+                      </label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="password" type="password" 
+                        class="form-control @if(session('password_error') || $errors->has('password')) is-invalid @endif"
+                        id="deleteAccountPassword" minlength="8" maxlength="25"
+                        required>
+                        <div class="invalid-feedback">{{__('messages.user.profile.delete_account_password_invalid_feedback')}}</div>
+                      </div>
+                    </div>
+                    <p class="text-danger">{{__('messages.user.profile.delete_account_note')}}</p>
+                    <div class="d-flex justify-content-end ">
+                      <div class="text-center">
+                        <button type="submit" id="userDeleteAccountBtn"  class="btn btn-danger">
+                          {{__('messages.user.profile.delete_account')}}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- End Delete Account Form -->
 
                 </div>
 
@@ -336,6 +370,40 @@
       var validated = $("#current_password").val().length >= 8 && $("#password").val().length >= 8 && $("#password_confirmation").val().length >= 8;
       if(validated) {
         handleBaseFormSubmit('userChangePassword', '{{__("messages.user.profile.change_password_submit_btn_loading_text")}}')
+      }
+      return validated;
+    });
+
+    $("#tfaStatus").on('change', function() {
+      $.ajax({
+        url: "{{route('user.tfa_status')}}",
+        type: 'PUT',
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({
+          "tfa_status": this.checked
+        }),
+        success: function (response) {
+            var type = response.success ? "success" : "error";
+            notify(type, response.message);
+            var addClass = response.tfa_status ? "bg-success" : "bg-warning";
+            var removeClass = response.tfa_status ? "bg-warning" : "bg-success";
+            $("#tfaStatusBadge").addClass(addClass).removeClass(removeClass);
+            $("#tfaStatusBadge").text(response.formatted_status);
+        },
+        error: function (error) {
+          $("#tfaStatus").prop('checked', !$("#tfaStatus").prop('checked'));
+          notify("error", error.responseJSON.message ?? "__('messages.user.profile.tfa_status_updation_failed')");
+        }
+      });
+    });
+
+    $("#userDeleteAccountForm").on('submit', function() {
+      var validated = $("#deleteAccountPassword").val().length >= 8;
+      if(validated) {
+        handleBaseFormSubmit('userDeleteAccount', '{{__("messages.user.profile.delete_account_submit_btn_loading_text")}}')
       }
       return validated;
     });

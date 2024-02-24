@@ -33,7 +33,8 @@ class Handler extends ExceptionHandler
             if ($request->expectsJson()) {
                 return response()->json(['message' => $error], 429);
             } else {
-                return redirect()->back()->with('error', $error);
+                abort(429);
+                // return redirect()->back()->with('error', $error);
             }
         });
     }

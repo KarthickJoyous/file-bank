@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('verification_code_expiry')->nullable();
             $table->tinyInteger('email_status')->default(EMAIL_NOT_VERIFIED);
             $table->tinyInteger('tfa_status')->default(DISABLED);
+            $table->boolean('tfa_verified')->default(false);
             $table->tinyInteger('status')->default(APPROVED);
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_password_reset_at')->nullable();

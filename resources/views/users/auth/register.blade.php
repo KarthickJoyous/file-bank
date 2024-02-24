@@ -48,8 +48,9 @@
     <div class="col-12">
       <button id="createAccountBtn" class="btn btn-primary w-100" type="submit">{{__('messages.user.register.submit_btn')}}</button>
     </div>
-    <div class="col-12">
-      <p class="small mb-0">
+    <div class="col-12 mt-0">
+      <hr />
+      <p class="small mb-0 text-center">
         {{__('messages.user.register.login_note')}}
         <a href="{{route('user.loginForm')}}">
           {{__('messages.user.register.login_btn')}}

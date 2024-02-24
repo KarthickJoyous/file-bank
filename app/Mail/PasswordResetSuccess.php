@@ -2,16 +2,14 @@
 
 namespace App\Mail;
 
-use Exception;
-use App\Helpers\Helper;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 
-class EmailVerificationCode extends Mailable implements ShouldQueue
+class PasswordResetSuccess extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +27,7 @@ class EmailVerificationCode extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('messages.user.emails.email_verification.subject'),
+            subject: __('messages.user.emails.password_reset_success.subject'),
         );
     }
 
@@ -37,19 +35,13 @@ class EmailVerificationCode extends Mailable implements ShouldQueue
      * Get the message content definition.
      */
     public function content(): Content
-    {   
-
-        $email_verification = (new Helper)->generate_verification_code();
-
-        $this->user->update($email_verification);
-
+    {
         return new Content(
-            markdown: 'mail.users.email_verification_code',
+            markdown: 'mail.users.password_reset_success',
             with: [
                 'name' => $this->user->name,
                 'url' => config('app.url'),
-                'verification_code' => $email_verification['verification_code'],
-                'body' => trans_choice('messages.user.emails.email_verification.body', config('app.otp_expiry_in_minutes'))
+                'body' => __('messages.user.emails.password_reset_success.body')
             ]
         );
     }

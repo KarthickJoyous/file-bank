@@ -33,9 +33,10 @@
       {{__('messages.user.email_verification.cancel_btn')}}
     </button>
   </div>
-  <div class="col-12">
-    <p class="small mb-0">{{__('messages.user.email_verification.send_verification_code_note')}}
-      <a href="{{route('user.verification_code')}}">
+  <div class="col-12 mt-0">
+    <hr />
+    <p class="small mb-0 text-center">{{__('messages.user.email_verification.send_verification_code_note')}}
+      <a href="{{route('user.email_verification_code')}}">
         {{__('messages.user.email_verification.send_verification_code_btn')}}
       </a>
     </p>
@@ -58,10 +59,11 @@
     });
 
     $("#verifyEmailForm").on("submit", function() {
-      if($("#verification_code").val().length == 6) {
+      var validated = $("#verification_code").val().length == 6;
+      if(validated) {
         handleBaseFormSubmit("verifyEmailForm", "{{__('messages.user.email_verification.submit_btn_loading_text')}}");
       }
-      return $("#verification_code").val().length == 6;
+      return validated;
     });
   </script>
 @endsection

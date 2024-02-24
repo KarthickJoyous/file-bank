@@ -68,6 +68,59 @@ return [
 			"invalid_credentials" => "Invalid Email / Password.",
 			"login_success" => "Login Success.",
 			"password_space_validation_message" => "Space are not allowed in passwords.",
+			"forgot_password" => "Forgot Password ?"
+		],
+
+		"forgot_password" => [
+			"title" => "Forgot Password",
+			"note" => "Email required.",
+			"email" => "Email",
+			"email_placeholder" => "Enter email",
+			"email_invalid_feedback" => "Please enter your email!",
+			"submit_btn" => "Send Link",
+			"submit_btn_loading_text" => "Sending Link...",
+			"send_link_success" => "Link sent to your email.",
+			"link_expired" => "Link is expired. New link send to your email.",
+			"login_note" => "Already have an account?",
+			"login_btn" => "Login"
+		],
+		
+		"reset_password" => [
+			"title" => "Reset Password",
+			"note" => "Reset Password",
+			"sub_note" => "Please enter password & password confirmation",
+			"password" => "Password",
+			"password_placeholder" => "Enter password",
+			"password_invalid_feedback" => "Please enter your password!",
+			"confirm_password" => "Confirm Password",
+			"confirm_password_placeholder" => "Enter confirm password",
+			"confirm_password_invalid_feedback" => "Please enter your confirm password!",
+			"submit_btn" => "Reset Password",
+			"submit_btn_loading_text" => "Resetting Password...",
+			"login_note" => "Already have an account?",
+			"login_btn" => "Login",
+			"reset_password_failed" => "Reset password failed. Please try again.",
+			"reset_password_success" => "Reset password success. Please login to continue."
+		],
+
+		"tfa_login" => [
+			"title" => "2FA Login",
+			"note" => "Verification code required.",
+			"verification_code" => "Verification Code",
+			"verification_code_placeholder" => "Enter verification code",
+			"verification_code_invalid_feedback" => "Please enter your verification code!",
+			"submit_btn" => "Verify",
+			"submit_btn_loading_text" => "Verifiying...",
+			"send_verification_code_note" => "Code not received?",
+			"send_verification_code_btn" => "Send verification code",
+			"verificaion_pending_note" => "Please verify your email to continue.",
+			"send_verification_code_failed" => "Send verification code failed. (User ID : :user_id | Email : :email)",
+			"send_verification_code_success" => "Verification code send.",
+			"code_expired" => "Verification code is expired. New code send to your email.",
+			"verificaion_failed" => "Verification Failed. Please try again.",
+			"verificaion_success" => "Verification Success.",
+			"verification_code_space_validation_message" => "Space not allowed in verification code.",
+			"forbidden" => "Please login to continue."
 		],
 
 		"logout" => [
@@ -122,11 +175,23 @@ return [
 			"password_invalid_feedback" => "Please enter the new password.",
 			"password_confirmation_invalid_feedback" => "Please enter the password confirmation.",
 			"change_password_failed" => "Change password failed. Please try again.",
-			"change_password_success" => "Password changed. Please login."
+			"change_password_success" => "Password changed. Please login.",
+			"tfa_status" => "2FA Status",
+			"tfa_status_updation_failed" => "2FA Status updation failed. Please try again.",
+			"tfa_status_updated" => "TFA status :status.",
+			"delete_account_password" => "Password",
+			"delete_account_password_invalid_feedback" => "Please enter the password.",
+			"delete_account" => "Delete Account",
+			"delete_account_submit_btn_loading_text" => "Deleting...",
+			"delete_account_note" => "Note : Once you proceed with the deletion of your account, please be aware that all associated data will be permanently lost and cannot be recovered. This includes your profile information, settings, files, and any other data linked to your account.",
+			"delete_account_failed" => "Account deletion failed. Please try again.",
+			"delete_account_success" => "Account has been deleted.",
 		],
 
 		"common" => [
-			"na" => "N/A"
+			"na" => "N/A",
+			"enabled" => "Enabled",
+			"disabled" => "Disabled"
 		],
 
 		"errors" => [
@@ -138,7 +203,7 @@ return [
 				"welcome_note" => "Hello :name,",
 				"subject" => "Email Verification Code",
 				"body" => "{1} This code is valid for the next :count minute. Please use it to complete the email verification process. If you didn't initiate this request, kindly disregard this email. |[2,*] This code is valid for the next :count minutes. Please use it to complete the email verification process. If you didn't initiate this request, kindly disregard this email.",
-				"sub_title" => "Here is your verification code:",
+				"sub_title" => "Here is your email verification code:",
 				"title" => "Verification Code: ",
 				"btn_text" => "Visit Website"
 			],
@@ -148,7 +213,31 @@ return [
 				"subject" => "Email Verified",
 				"body" => "Your email has been successfully verified.",
 				"btn_text" => "Visit Website"
-			]
+			],
+
+			"tfa_verification" => [
+				"welcome_note" => "Hello :name,",
+				"subject" => "2FA Verification Code",
+				"body" => "{1} This code is valid for the next :count minute. Please use it to complete the two factor authentication process. If you didn't initiate this request, kindly disregard this email. |[2,*] This code is valid for the next :count minutes. Please use it to complete the email verification process. If you didn't initiate this request, kindly disregard this email.",
+				"sub_title" => "Here is your 2FA verification code:",
+				"title" => "Verification Code: ",
+				"btn_text" => "Visit Website"
+			],
+
+			"password_reset_link" => [
+				"welcome_note" => "Hello :name,",
+				"subject" => "Password Reset Link",
+				"body" => "You're receiving this email because you requested a password reset. To reset your password and regain access to your account, simply click on the link below:",
+				"ignore_note" => "If you didn't initiate this request, kindly disregard this email.",
+				"btn_text" => "Reset Password"
+			],
+
+			"password_reset_success" => [
+				"welcome_note" => "Hello :name,",
+				"subject" => "Password Reset Success",
+				"body" => " Your password has been successfully reset. You can now log in to your account using your new password.",
+				"btn_text" => "Visit Website"
+			],
 		]
 	]
 ];

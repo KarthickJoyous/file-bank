@@ -2,16 +2,16 @@
 
 namespace App\Mail;
 
-use Exception;
-use App\Helpers\Helper;
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use App\Models\PasswordResetToken;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class EmailVerificationCode extends Mailable implements ShouldQueue
+class PasswordResetLink extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +29,7 @@ class EmailVerificationCode extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('messages.user.emails.email_verification.subject'),
+            subject: __('messages.user.emails.password_reset_link.subject'),
         );
     }
 
@@ -37,19 +37,23 @@ class EmailVerificationCode extends Mailable implements ShouldQueue
      * Get the message content definition.
      */
     public function content(): Content
-    {   
+    {
+        PasswordResetToken::where(['email' => $this->user->email])->delete();
 
-        $email_verification = (new Helper)->generate_verification_code();
+        $token = Str::random(150);
 
-        $this->user->update($email_verification);
+        PasswordResetToken::insert([
+            'email' => $this->user->email,
+            'token' => $token,
+            'created_at' => now()
+        ]);
 
         return new Content(
-            markdown: 'mail.users.email_verification_code',
+            markdown: 'mail.users.password_reset_link',
             with: [
                 'name' => $this->user->name,
-                'url' => config('app.url'),
-                'verification_code' => $email_verification['verification_code'],
-                'body' => trans_choice('messages.user.emails.email_verification.body', config('app.otp_expiry_in_minutes'))
+                'url' => route('user.resetPasswordLink', $token),
+                'body' => __('messages.user.emails.password_reset_link.body')
             ]
         );
     }

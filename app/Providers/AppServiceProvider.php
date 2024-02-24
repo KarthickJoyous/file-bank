@@ -22,15 +22,14 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {   
-        info(request()->url());
-        
+    {        
         Password::defaults(function () {
             return Password::min(8)->mixedCase()->rules(['max:25', 'regex:/^[^\s]+$/']);
         });
 
         Blade::if('authorized', function () {
-            return auth('web')->check() && auth('web')->user()->email_status && auth('web')->user()->email_verified_at;
+            
+            return (auth('web')->check() && auth('web')->user()->email_status && auth('web')->user()->email_verified_at);
         });
     }
 }
