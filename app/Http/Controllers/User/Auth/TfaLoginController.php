@@ -6,7 +6,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
-use App\Mail\{TfaVerificationCode};
+use App\Mail\User\{TfaVerificationCode};
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;

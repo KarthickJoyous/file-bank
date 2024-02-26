@@ -176,9 +176,9 @@ return [
 			"password_confirmation_invalid_feedback" => "Please enter the password confirmation.",
 			"change_password_failed" => "Change password failed. Please try again.",
 			"change_password_success" => "Password changed. Please login.",
-			"tfa_status" => "2FA Status",
-			"tfa_status_updation_failed" => "2FA Status updation failed. Please try again.",
-			"tfa_status_updated" => "TFA status :status.",
+			"tfa_status" => "Two Factory Authentication",
+			"tfa_status_updation_failed" => "Two factory authentication status updation failed. Please try again.",
+			"tfa_status_updated" => "Two factory authentication :status.",
 			"delete_account_password" => "Password",
 			"delete_account_password_invalid_feedback" => "Please enter the password.",
 			"delete_account" => "Delete Account",
@@ -236,6 +236,13 @@ return [
 				"welcome_note" => "Hello :name,",
 				"subject" => "Password Reset Success",
 				"body" => " Your password has been successfully reset. You can now log in to your account using your new password.",
+				"btn_text" => "Visit Website"
+			],
+
+			"change_password_success" => [
+				"welcome_note" => "Hello :name,",
+				"subject" => "Change Password Success",
+				"body" => " Your password has been successfully changed. You can now log in to your account using your new password.",
 				"btn_text" => "Visit Website"
 			],
 		]

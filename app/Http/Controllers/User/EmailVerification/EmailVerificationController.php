@@ -6,7 +6,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
-use App\Mail\{EmailVerificationCode, EmailVerified};
+use App\Mail\User\{EmailVerificationCode, EmailVerified};
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\{Request, RedirectResponse};

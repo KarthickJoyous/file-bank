@@ -2,7 +2,7 @@
 
 namespace App\Actions\User;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\EmailVerificationCode;
+use App\Mail\User\EmailVerificationCode;
 
 class EmailVerification {
 

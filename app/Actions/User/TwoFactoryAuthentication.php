@@ -2,7 +2,7 @@
 
 namespace App\Actions\User;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\{TfaVerificationCode};
+use App\Mail\User\{TfaVerificationCode};
 
 class TwoFactoryAuthentication {
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User\Auth;
 
 use Exception;
 use Illuminate\View\View;
-use App\Mail\{PasswordResetLink, PasswordResetSuccess};
+use App\Mail\User\{PasswordResetLink, PasswordResetSuccess};
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;

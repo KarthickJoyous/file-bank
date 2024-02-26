@@ -6,7 +6,9 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\{RedirectResponse};
+use App\Mail\User\ChangePassswordSuccess;
 use App\Http\Requests\User\Account\{ChangePasswordRequest};
 
 class ChangePasswordController extends Controller
@@ -41,6 +43,8 @@ class ChangePasswordController extends Controller
             throw_if(!$result, new Exception(__('messages.user.profile.change_password_failed')));
 
             DB::commit();
+
+            Mail::to($user)->send(new ChangePassswordSuccess($user));
 
             auth('web')->logout();
  

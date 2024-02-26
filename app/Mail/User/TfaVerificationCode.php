@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\User;
 
-use Illuminate\Support\Str;
+use App\Helpers\Helper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use App\Models\PasswordResetToken;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PasswordResetLink extends Mailable implements ShouldQueue
+class TfaVerificationCode extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +28,7 @@ class PasswordResetLink extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('messages.user.emails.password_reset_link.subject'),
+            subject: __('messages.user.emails.tfa_verification.subject'),
         );
     }
 
@@ -38,22 +37,17 @@ class PasswordResetLink extends Mailable implements ShouldQueue
      */
     public function content(): Content
     {
-        PasswordResetToken::where(['email' => $this->user->email])->delete();
+        $email_verification = (new Helper)->generate_verification_code();
 
-        $token = Str::random(150);
-
-        PasswordResetToken::insert([
-            'email' => $this->user->email,
-            'token' => $token,
-            'created_at' => now()
-        ]);
+        $this->user->update($email_verification);
 
         return new Content(
-            markdown: 'mail.users.password_reset_link',
+            markdown: 'mail.users.tfa_verification_code',
             with: [
                 'name' => $this->user->name,
-                'url' => route('user.resetPasswordLink', $token),
-                'body' => __('messages.user.emails.password_reset_link.body')
+                'url' => config('app.url'),
+                'verification_code' => $email_verification['verification_code'],
+                'body' => trans_choice('messages.user.emails.tfa_verification.body', config('app.otp_expiry_in_minutes'))
             ]
         );
     }
