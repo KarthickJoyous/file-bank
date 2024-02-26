@@ -84,6 +84,8 @@ class ForgotPasswordController extends Controller
 
             $user = User::firstWhere(['email' => $password_reset_token->email]);
 
+            throw_if(!$user, new Exception);
+
             $user->update([
                 'password' => Hash::make($request->password),
                 'last_password_reset_at' => now()
