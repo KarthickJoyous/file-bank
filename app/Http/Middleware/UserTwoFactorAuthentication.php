@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TwoFactorAuthentication
+class UserTwoFactorAuthentication
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class TwoFactorAuthentication
     {   
         try {
 
-            throw_if(!$decrypt = decrypt($request->__token), new Exception); // Decrypt will retrun user email, unique_id & timestamp if success (Check LoginController::login())
+            throw_if(!$decrypt = decrypt($request->__token), new Exception); // Decrypt will retrun user email, unique_id & timestamp if success (Check User\LoginController::login())
 
             throw_if($decrypt['timestamp'] != now()->addMinute(1)->format('Y-m-d h:i A e'), new Exception);
 

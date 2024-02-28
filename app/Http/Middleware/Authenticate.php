@@ -11,17 +11,19 @@ class Authenticate extends Middleware
      * Get the path the user should be redirected to when they are not authenticated.
      */
     protected function redirectTo(Request $request): ?string
-    {   
-        switch (auth()->guard()->name) {
-            case 'web':
-                $redirectTo = route('user.login');
-                break;
-            
-            default:
-                $redirectTo = null;
-                break;
+    {
+        if($request->expectsJson()) {
+            return null;
         }
 
-        return $redirectTo;
+        if($request->routeIs('user.*')) {
+            return route('user.login');;
+        }
+
+        if($request->routeIs('admin.*')) {
+            return route('admin.login');;
+        }
+
+        abort(403);
     }
 }

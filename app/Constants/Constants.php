@@ -11,6 +11,8 @@ define('EMAIL_VERIFIED', 1);
 
 define('DISABLED', 0);
 define('ENABLED', 1);
+
 // File paths
 
 define('USER_FILE_PATH', 'users');
+define('ADMIN_FILE_PATH', 'admins');

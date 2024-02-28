@@ -38,6 +38,15 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
+        'admin' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
@@ -65,7 +74,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'emailVerified' => \App\Http\Middleware\EmailVerified::class,
-        'tfaVerification' => \App\Http\Middleware\TwoFactorAuthentication::class,
-        'appVerification' => \App\Http\Middleware\AppVerification::class,
+        'userTfaVerification' => \App\Http\Middleware\UserTwoFactorAuthentication::class,
+        'userAppVerification' => \App\Http\Middleware\UserAppVerification::class,
+        'adminTfaVerification' => \App\Http\Middleware\AdminTwoFactorAuthentication::class,
+        'adminAppVerification' => \App\Http\Middleware\AdminAppVerification::class,
     ];
 }

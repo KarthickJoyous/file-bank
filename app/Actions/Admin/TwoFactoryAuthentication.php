@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Actions\User;
+namespace App\Actions\Admin;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\User\{TfaVerificationCode};
+use App\Mail\Admin\{TfaVerificationCode};
 
 class TwoFactoryAuthentication {
 
-    public function handle($user) {
+    public function handle($admin) {
 
-        $user->update(['tfa_verified' => false]);
+        $admin->update(['tfa_verified' => false]);
 
-        Mail::to($user)->send(new TfaVerificationCode($user));
+        Mail::to($admin)->send(new TfaVerificationCode($admin));
 
-        return redirect()->route('user.tfaLoginForm', [
+        return redirect()->route('admin.tfaLoginForm', [
             '__token' => encrypt([
-                'unique_id' => $user->unique_id,
-                'email' => $user->email,
+                'unique_id' => $admin->unique_id,
+                'email' => $admin->email,
                 'tfa_status' => ENABLED,
                 'timestamp' => now()->addMinute(1)->format('Y-m-d h:i A e')
             ]),

@@ -15,14 +15,14 @@
     <label for="email" class="form-label">{{__('messages.user.login.email')}} *</label>
     <div class="input-group has-validation">
       <span class="input-group-text" id="inputGroupPrepend">@</span>
-      <input type="text" id="email" name="email" class="form-control" placeholder="{{__('messages.user.login.email_placeholder')}}" value="{{old('email')}}" required>
+      <input type="text" id="email" name="email" maxlength="50" class="form-control" placeholder="{{__('messages.user.login.email_placeholder')}}" value="{{old('email')}}" required>
       <div class="invalid-feedback">{{__('messages.user.login.email_invalid_feedback')}}</div>
     </div>
   </div>
 
   <div class="col-12">
     <label for="password" class="form-label">{{__('messages.user.login.password')}} *</label>
-    <input type="password" id="password" name="password" class="form-control password" placeholder="{{__('messages.user.login.password_placeholder')}}" required>
+    <input type="password" id="password"  minlength="8" maxlength="25" name="password" class="form-control password" placeholder="{{__('messages.user.login.password_placeholder')}}" required>
     <div class="invalid-feedback">{{__('messages.user.login.password_invalid_feedback')}}</div>
   </div>
 

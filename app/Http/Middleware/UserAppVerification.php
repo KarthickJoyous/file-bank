@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Actions\User\{EmailVerification, TwoFactoryAuthentication};
 use Symfony\Component\HttpFoundation\Response;
 
-class AppVerification
+class UserAppVerification
 {
     /**
      * Handle an incoming request.
@@ -23,14 +23,10 @@ class AppVerification
             return (new EmailVerification)->handle($user);
         }
 
-        info("EmailVerification");
-
         if($user->tfa_status == YES && $user->tfa_verified == false) {
 
             return (new TwoFactoryAuthentication)->handle($user);
         }
-
-        info("EmailVerification");
 
         return $next($request);
     }

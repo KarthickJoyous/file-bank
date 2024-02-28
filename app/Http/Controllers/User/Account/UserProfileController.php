@@ -12,7 +12,7 @@ use App\Http\Requests\User\Account\{UserUpdateProfileRequest};
 class UserProfileController extends Controller
 {
     /**
-     * To show the profile details with actions (Edit Profile / Settings / Change Password) form.
+     * To show the profile details with actions (Edit Profile / Settings / Change Password / Delete Account) form.
     */
     public function profile()
     {

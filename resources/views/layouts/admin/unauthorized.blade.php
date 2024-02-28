@@ -8,7 +8,7 @@
 
             <!-- Logo -->
             <div class="d-flex justify-content-center py-4">
-              <a href="{{route('user.login')}}" class="logo d-flex align-items-center w-auto">
+              <a href="{{route('admin.login')}}" class="logo d-flex align-items-center w-auto">
                 <img src="@setting('app_logo')" alt="">
                 <span class="d-none d-lg-block">@setting('app_name')</span>
               </a>

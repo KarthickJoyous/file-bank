@@ -48,7 +48,7 @@ Route::group(['as' => 'user.'], function() {
 			Route::post('reset_password/{token}', 'reset_password')->name('reset_password');
 		});
 
-		Route::group(['middleware' => ['tfaVerification']], function() {
+		Route::group(['middleware' => ['userTfaVerification']], function() {
 
 			Route::controller(TfaLoginController::class)->group(function () {
 
@@ -75,7 +75,7 @@ Route::group(['as' => 'user.'], function() {
 			});
 		});
 
-		Route::group(['middleware' => ['appVerification']], function() {
+		Route::group(['middleware' => ['userAppVerification']], function() {
 
 			Route::get('', HomeController::class)->name('dashboard');
 
