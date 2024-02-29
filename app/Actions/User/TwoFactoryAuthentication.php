@@ -20,6 +20,6 @@ class TwoFactoryAuthentication {
                 'timestamp' => now()->addMinute(1)->format('Y-m-d h:i A e')
             ]),
             'remember_me' => request('remember_me')
-        ])->with('success', __('messages.admin.tfa_login.verification_code_send'));
+        ])->with('success', __('messages.user.tfa_login.verification_code_send'));
     }
 }
