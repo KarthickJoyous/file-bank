@@ -90,9 +90,9 @@ Route::group(['as' => 'user.'], function() {
 
 			Route::put('tfa_status', TwoFAController::class)->name('tfa_status');
 
-			Route::get('logout', LogoutController::class)->name('logout');
-
 			Route::delete('delete_account', DeleteAccountController::class)->name('delete_account');
 		});
+
+		Route::get('logout', LogoutController::class)->name('logout');
 	});
 });

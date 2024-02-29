@@ -16,7 +16,7 @@ class SettingSeeder extends Seeder
     {
         Setting::updateOrCreate([
             'key' => 'app_name', 
-            'value' => 'Base-Template-App'
+            'value' => config('app.name')
         ]);
 
         Setting::updateOrCreate([
