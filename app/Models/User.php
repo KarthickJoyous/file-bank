@@ -40,6 +40,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function passbook() {
+
+        return $this->hasOne(Passbook::class)->withDefault();
+    }
+
     public static function boot() {
 
         parent::boot();
@@ -54,6 +59,8 @@ class User extends Authenticatable
             $model->attributes['unique_id'] = "U-".str_pad($model->attributes['id'], 5, 0, STR_PAD_LEFT)."-".$model->attributes['unique_id'];
 
             $model->save();
+
+            Passbook::Create(['user_id' => $model->attributes['id']]);
         });
     }
 }

@@ -1,0 +1,16 @@
+.file-card-width {
+    width: 18rem;
+}
+
+.file-card-img {
+    height: 150px;
+    object-fit: cover;
+}
+
+.no-data {
+    width: 30%;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}

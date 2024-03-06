@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class Helper {
@@ -72,4 +73,27 @@ class Helper {
 
 		return Arr::join($otp, "");
 	}
+
+	/**
+	 * To upload a file to storage with custom file name.
+	 * 
+	 * @param file
+	 * 
+	 * @param string
+	 * 
+	 * @return string
+	*/
+	public static function deposit_file($file, $folder_path, $file_name): string 
+	{
+
+        if(!is_file($file)) return asset('placeholders/user/avatar.png');
+
+		$file_extension = $file->getClientOriginalExtension();
+
+		info("Uploaded file extension : ". $file_extension);
+
+        $disk = 'public';
+
+        return asset(Storage::disk($disk)->url(Storage::disk($disk)->putFileAs($folder_path, $file, "$file_name.$file_extension")));
+    }
 }

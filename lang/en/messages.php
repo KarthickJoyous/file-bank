@@ -138,12 +138,17 @@ return [
 
 		"sidebar" => [
 			"home" => "Home",
+			"folders" => "Folders",
+			"files" => "Files",
 			"profile" => "Profile",
 			"logout" => "Logout",
+			"storage" => "Storage"
 		],
 
 		"home" => [
-			"title" => "Home"
+			"title" => "Home",
+			"folders" => "Recent Folders",
+			"files" => "Recent Files"
 		],
 
 		"profile" => [
@@ -245,6 +250,57 @@ return [
 				"body" => " Your password has been successfully changed. You can now log in to your account using your new password.",
 				"btn_text" => "Visit Website"
 			],
+		],
+
+		"folders" => [
+			"title" => "Folders",
+			"search" => "Search",
+			"search_placeholder" => "Search by folder name",
+			"search_result_for" => "{0} No search results for : :search|{1} :count Search result for : :search|[2,*] :count Search results for : :search",
+			"clear" => "Clear",
+			"files" => "Files",
+			"sub_folders_count" => "{1} :count Sub folder|[2,*] :count Sub folders",
+			"cancel" => "Cancel",
+			"submit" => "Submit",
+			"name" => "Folder Name",
+			"name_placeholder" => "Enter folder name",
+			"description" => "Folder Description",
+			"description_placeholder" => "Enter folder Description",
+			"create_folder" => "Create Folder",
+			"create_folder_submit_btn_loading_text" => "Creating Folder...",
+			"creation_failed" => "Folder creation failed. Please try again.",
+			"creation_success" => "Folder created.",
+			"update" => "Update Folder (:name)",
+			"update_folder" => "Update Folder",
+			"update_folder_submit_btn_loading_text" => "Updating Folder...",
+			"updation_failed" => "Folder updation failed. Please try again.",
+			"updation_success" => "Folder updated.",
+			"delete" => "Delete Folder (:name)",
+			"delete_folder" => "Delete Folder",
+			"delete_folder_note" => "Note : Once you proceed with the deletion of the folder (:name), please be aware that all associated sub folders & files will be permanently deleted and cannot be recovered.",
+			"delete_folder_submit_btn_loading_text" => "Deleting Folder...",
+			"deletion_failed" => "Folder deletion failed. Please try again.",
+			"deletion_success" => "Folder deleted.",
+		],
+
+		"files" => [
+			"title" => "Files",
+			"search" => "Search",
+			"search_placeholder" => "Search by file name",
+			"search_result_for" => "{0} No search results for : :search|{1} :count Search result for : :search|[2,*] :count Search results for : :search",
+			"clear" => "Clear",
+			"file" => "File",
+			"upload" => "Upload",
+			"upload_file" => "Upload File",
+			"name" => "File Name",
+			"name_placeholder" => "Enter file name",
+			"cancel" => "Cancel",
+			"submit" => "Submit",
+			"upload_file_note" => "The option to specify a file name is available; in case one is not provided, a random name will be generated automatically.",
+			"upload_file_submit_btn_loading_text" => "Uploading File...",
+			"file_upload_failed" => "File upload failed. Please try again.",
+			"file_upload_success" => "File uploaded.",
+			"files_required" => "Please choose files."
 		]
 		],
 

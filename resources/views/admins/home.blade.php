@@ -2,7 +2,7 @@
 
 @section('title', __('messages.admin.home.title'))
 
-@section('breadcrumn') @endsection
+@section('breadcrumb') @endsection
 
 @section('content')
 <section class="section dashboard">

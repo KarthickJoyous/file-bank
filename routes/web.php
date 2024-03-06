@@ -9,6 +9,10 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\EmailVerification\{EmailVerificationController};
 
 use App\Http\Controllers\User\Account\{UserProfileController, ChangePasswordController, TwoFAController, LogoutController, DeleteAccountController};
+
+use App\Http\Controllers\User\Folder\{FolderController};
+
+use App\Http\Controllers\User\File\{FileController};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -91,6 +95,10 @@ Route::group(['as' => 'user.'], function() {
 			Route::put('tfa_status', TwoFAController::class)->name('tfa_status');
 
 			Route::delete('delete_account', DeleteAccountController::class)->name('delete_account');
+
+			Route::resource('folders', FolderController::class)->except(['create', 'edit']);
+
+			Route::resource('files', FileController::class)->except(['create', 'edit']);
 		});
 
 		Route::get('logout', LogoutController::class)->name('logout');

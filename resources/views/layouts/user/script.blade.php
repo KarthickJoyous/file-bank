@@ -58,6 +58,19 @@
 		$(`#${formId}Btn`).text(loadingText);
 		$(`#${formId}Btn`).append(`<span class="spinner-border spinner-border-sm mx-1" role="status" aria-hidden="true"></span>`);
 	}
+
+	function handleBaseFormSubmitBack(formId, btnText) {
+		$(`#${formId}Btn`).attr('disabled', false);
+		$(`#${formId}Btn`).text(btnText);
+	}
+
+	@authorized
+		$("body").addClass(localStorage.getItem("isSidebarClosed") == "true" ? 'toggle-sidebar' : '');
+
+		$("#sidebarBtn").on('click', function() {
+			localStorage.setItem('isSidebarClosed', localStorage.getItem("isSidebarClosed") == "true" ? "false" : "true");
+		});
+	@endauthorized
 </script>
 
 @yield('script')

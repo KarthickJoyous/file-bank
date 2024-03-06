@@ -2,7 +2,7 @@
 
 @section('title', __('messages.user.profile.title'))
 
-@section('breadcrumn') 
+@section('breadcrumb') 
 <li class="breadcrumb-item active">
 	{{__('messages.user.profile.title')}}
 </li>
