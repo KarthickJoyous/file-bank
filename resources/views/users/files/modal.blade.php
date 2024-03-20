@@ -28,3 +28,20 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="deleteFileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title"><i class="bi bi-trash-fill"></i>&nbsp;{{__('messages.user.files.delete_file')}}?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <input type="hidden" id="fileId" value="" />
+        <div class="modal-body" id="deleteFileModalNote"></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('messages.user.files.cancel')}}</button>
+            <button type="button" id="deleteFileSubmitBtn" class="btn btn-danger" onclick="deleteFile()"><i class="bi bi-trash-fill"></i>&nbsp;{{__('messages.user.files.delete')}}</button>
+        </div>
+        </div>
+    </div>
+</div>

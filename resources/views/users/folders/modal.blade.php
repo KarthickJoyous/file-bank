@@ -10,13 +10,36 @@
             <input type="hidden" name="sub_folder" value="{{$folder->id ?? null}}">
             <div class="modal-body">
                 <label class="form-label mb-2" for="createFolderText">{{__('messages.user.folders.name')}} *</label>
-                <input class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" placeholder="{{__('messages.user.folders.name_placeholder')}}" id="createFolderText" type="text" minlength="1" maxlength="25" name="name" required/>
+                <input class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" placeholder="{{__('messages.user.folders.name_placeholder')}}" id="createFolderText" type="text" minlength="1" maxlength="25" name="name" required autofocus />
                 <label class="form-label my-2" for="createFolderDescription">{{__('messages.user.folders.description')}}</label>
                 <textarea class="form-control @error('description') is-invalid @enderror" placeholder="{{__('messages.user.folders.name_placeholder')}}" id="createFolderDescription" minlength="1" maxlength="255" name="description">{{old('description')}}</textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">{{__('messages.user.folders.cancel')}}</button>
                 <button type="submit" id="folderCreateBtn" class="btn btn-warning">{{__('messages.user.folders.submit')}}</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="setFolderColor" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title"><i class="bi bi-palette-fill"></i>&nbsp; {{__('messages.user.folders.folder_color')}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="setFolderColorForm" method="POST" action="{{route('user.folders.set_folder_color')}}">
+        @csrf
+        @method('PUT')
+            <div class="modal-body">
+                <label class="form-label mb-2" for="setFolderColorText">{{__('messages.user.folders.choose_color')}} *</label>
+                <input type="color" name="folder" class="form-control form-control-color" id="setFolderColorText" value="{{auth('web')->user()->passbook->folder}}" title="{{__('messages.user.folders.choose_color')}}" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">{{__('messages.user.folders.cancel')}}</button>
+                <button type="submit" id="setFolderColorBtn" class="btn btn-success">{{__('messages.user.folders.submit')}}</button>
             </div>
         </form>
         </div>
@@ -36,7 +59,7 @@
         @method('put')
             <div class="modal-body">
                 <label class="form-label mb-2" for="updateFolderText">{{__('messages.user.folders.name')}} *</label>
-                <input class="form-control @error('name') is-invalid @enderror" value="{{old('name', $folder->name)}}" placeholder="{{__('messages.user.folders.name_placeholder')}}" id="updateFolderText" type="text" minlength="1" maxlength="25" name="name" required/>
+                <input class="form-control @error('name') is-invalid @enderror" value="{{old('name', $folder->name)}}" placeholder="{{__('messages.user.folders.name_placeholder')}}" id="updateFolderText" type="text" minlength="1" maxlength="25" name="name" required autofocus />
                 <label class="form-label my-2" for="updateFolderDescription">{{__('messages.user.folders.description')}}</label>
                 <textarea class="form-control @error('description') is-invalid @enderror" placeholder="{{__('messages.user.folders.name_placeholder')}}" id="updateFolderDescription" minlength="1" maxlength="255" name="description">{{old('description', $folder->description)}}</textarea>
             </div>

@@ -14,7 +14,10 @@
 	@endif
 	<div class="d-flex justify-content-between">
 		<div>
-			<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#createFolder"><i class="bi bi-patch-plus"></i></i>&nbsp;{{__('messages.user.folders.create_folder')}}</button>
+			<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#createFolder"><i class="bi bi-patch-plus"></i>&nbsp;{{__('messages.user.folders.create_folder')}}</button>
+			@if($folders->isNotEmpty())
+				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#setFolderColor"><i class="bi bi-palette-fill"></i>&nbsp;{{__('messages.user.folders.folder_color')}}</button>
+			@endif
 		</div>
 		<div>
 			<form action="{{route('user.folders.index')}}" id="folderSearchForm">

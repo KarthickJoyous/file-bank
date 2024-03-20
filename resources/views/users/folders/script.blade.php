@@ -22,6 +22,14 @@
         return validated;
     });
 
+    $("#setFolderColor").on('submit', function() {
+        var validated = $("#setFolderColorText").val().length;
+        if(validated) {
+            handleBaseFormSubmit("setFolderColor", "{{__('messages.user.folders.set_folder_color_submit_btn_loading_text')}}");
+        }
+        return validated;
+    });
+
     @if(isset($folder))
         {{--@if(session('update_folder_error') || $errors->has('name') || $errors->has('sub_folder') || $errors->has('description'))
             $(document).ready(function(){

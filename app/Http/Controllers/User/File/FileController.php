@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User\File;
 
 use Exception;
-use App\Models\File;
+use App\Models\{File, Passbook};
 use App\Helpers\Helper;
 use App\Helpers\viewHelper;
 use Illuminate\Support\Str;
@@ -49,7 +49,7 @@ class FileController extends Controller
     {
         try {
 
-            $file = DB::transaction(function () use($request) {
+            DB::transaction(function () use($request) {
 
                 foreach($request->file as $file) {
 
@@ -78,17 +78,33 @@ class FileController extends Controller
                     $file = File::Create($request->validated() + $file_info);
 
                     throw_if(!$file, new Exception(__('messages.user.files.file_upload_failed')));
-                }
 
-                return $file;
+                    $passbook = Passbook::lockForUpdate()->firstOrCreate(['user_id' => $file->user_id]);
+                    
+                    $result = $passbook->update([
+                        'used' => $passbook->used + $file_info['size'],
+                        'remaining' => $passbook->remaining - $file_info['size']
+                    ]);
+
+                    throw_if(!$result, new Exception(__('messages.user.files.file_upload_failed')));
+                }
             });
 
-            return redirect()->route('user.files.show', $file)->with('success', (__('messages.user.files.file_upload_success')));
+            $response = [
+                'success' => true,
+                'message' => __('messages.user.files.file_upload_success'),
+                'redirect_to' => $request->folder_id ? route('user.folders.show', $request->folder_id) : route('user.files.index')
+            ];
 
         } catch(Exception $e) {
 
-            return back()->withInput()->with('error', $e->getMessage())->with('file_upload_error', true);
+            $response = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
+
+        return response()->json($response, 200);
     }
 
     /**
@@ -114,6 +130,29 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        abort_if($file->user_id != auth('web')->id(), 404);
+        
+        try {
+
+            DB::transaction(function () use($file) {
+
+                throw_if(!$file->delete(), new Exception(__('messages.user.files.deletion_failed')));
+
+                $passbook = Passbook::lockForUpdate()->firstOrCreate(['user_id' => $file->user_id]);
+                    
+                $result = $passbook->update([
+                    'used' => $passbook->used - $file->size,
+                    'remaining' => $passbook->remaining + $file->size
+                ]);
+
+                throw_if(!$result, new Exception(__('messages.user.files.deletion_failed')));
+            });
+
+            return redirect()->route('user.files.index')->with('success', (__('messages.user.files.deletion_success')));
+
+        } catch(Exception $e) {
+
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

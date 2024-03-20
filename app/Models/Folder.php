@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -54,15 +55,17 @@ class Folder extends Model
 
         static::deleted(function($model) {
 
-            foreach($model->subFolders() as $sub_folder) {
+            foreach($model->subFolders as $sub_folder) {
 
                 $sub_folder->delete();
             }
 
-            foreach($model->files() as $file) {
+            foreach($model->files as $file) {
 
-                $file->delete();
+                Helper::delete_file($file->url, "$file->user_id/" . FILE_BANK_FILE_PATH);
             }
+
+            $model->files()->delete();
         });
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('unique_id')->unique();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('folder')->default('f5dd31');
+            $table->string('folder')->default('#f5dd31');
             $table->float('total')->default(512);
             $table->float('remaining')->default(512);
             $table->float('used')->default(0);

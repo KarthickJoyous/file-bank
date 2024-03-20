@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+@include('users.files.modal')
 <section class="section dashboard">
 	<p class="h2 mb-3">{{__('messages.user.home.folders')}}</p>
 	<div class="row text-center d-flex">
@@ -34,4 +35,8 @@
 		@endforelse
 	</div>
 </section>
+@endsection
+
+@section('script')
+@include('users.files.script')
 @endsection

@@ -96,6 +96,8 @@ Route::group(['as' => 'user.'], function() {
 
 			Route::delete('delete_account', DeleteAccountController::class)->name('delete_account');
 
+			Route::put('set_folder_color', [FolderController::class, 'set_folder_color'])->name('folders.set_folder_color');
+
 			Route::resource('folders', FolderController::class)->except(['create', 'edit']);
 
 			Route::resource('files', FileController::class)->except(['create', 'edit']);

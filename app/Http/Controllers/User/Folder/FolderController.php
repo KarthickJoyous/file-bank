@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\User\Folder;
 
 use Exception;
-use App\Models\Folder;
+use App\Models\{Folder, File, Passbook};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\Folder\CreateFolderRequest;
-use App\Http\Requests\User\Folder\UpdateFolderRequest;
+use App\Http\Requests\User\Folder\{CreateFolderRequest, UpdateFolderRequest, SetFolderColorRequest};
 
 class FolderController extends Controller
 {   
@@ -121,6 +120,20 @@ class FolderController extends Controller
 
             DB::transaction(function () use($folder) {
 
+                $used_storage = File::where(['user_id' => $folder->user_id, 'folder_id' => $folder->id])->sum('size');
+                
+                if($used_storage) {
+
+                    $passbook = Passbook::lockForUpdate()->firstOrCreate(['user_id' => $folder->user_id]);
+
+                    $result = $passbook->update([
+                        'used' => $passbook->used - $used_storage,
+                        'remaining' => $passbook->remaining + $used_storage
+                    ]);
+    
+                    throw_if(!$result, new Exception(__('messages.user.folders.deletion_failed')));
+                }
+
                 throw_if(!$folder->delete(), new Exception(__('messages.user.folders.deletion_failed')));
             });
 
@@ -131,4 +144,28 @@ class FolderController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+
+    /**
+     * Set folder icon color.
+     * 
+     * @param SetFolderColorRequest $request
+     */
+    public function set_folder_color(SetFolderColorRequest $request) {
+
+        try {
+
+            $validated = $request->validated();
+
+            DB::transaction(function () use($validated) {
+
+                throw_if(!auth('web')->user()->passbook->update($validated), new Exception(__('messages.user.folders.set_folder_color_failed')));
+            });
+
+            return back()->with('success', (__('messages.user.folders.set_folder_color_success')));
+
+        } catch(Exception $e) {
+
+            return back()->with('error', $e->getMessage());
+        }
+    } 
 }

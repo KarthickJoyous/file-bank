@@ -1,6 +1,11 @@
 <div class="card file-card-width">
     <div class="card-header">
-        <x-file-type :fileType="$file->file_type" />
+        <div class="d-flex justify-content-between">
+            <x-file-type :fileType="$file->file_type" />
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#deleteFileModal" onclick="setDeleteFileModal('{{$file->id}}', '{{$file->name}}')">
+                <span class="text-danger"><i class="bi bi-trash-fill"></i></span>
+            </a>
+        </div>
     </div>
     <div class="card-body">
         @php $file_name = $file->name.'.'.$file->file_type; @endphp

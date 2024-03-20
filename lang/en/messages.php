@@ -281,6 +281,11 @@ return [
 			"delete_folder_submit_btn_loading_text" => "Deleting Folder...",
 			"deletion_failed" => "Folder deletion failed. Please try again.",
 			"deletion_success" => "Folder deleted.",
+			"folder_color" => "Folder Color",
+			"choose_color" => "Choose your color",
+			"set_folder_color_submit_btn_loading_text" => "Setting folder color...",
+			"set_folder_color_success" => "Folder color updated.",
+			"set_folder_color_failed" => "Set folder color failed. Please try again."
 		],
 
 		"files" => [
@@ -300,7 +305,13 @@ return [
 			"upload_file_submit_btn_loading_text" => "Uploading File...",
 			"file_upload_failed" => "File upload failed. Please try again.",
 			"file_upload_success" => "File uploaded.",
-			"files_required" => "Please choose files."
+			"files_required" => "Please choose files.",
+			"delete" => "Delete",
+			"delete_file" => "Delete File",
+			"delete_file_note" => "Note : Once you proceed with the deletion of the File (:name), please be aware that the file will be permanently deleted and cannot be recovered.",
+			"delete_file_submit_btn_loading_text" => "Deleting File...",
+			"deletion_failed" => "File deletion failed. Please try again.",
+			"deletion_success" => "File deleted.",
 		]
 		],
 

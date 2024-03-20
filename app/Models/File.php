@@ -45,7 +45,7 @@ class File extends Model
 
         static::deleted(function($model) {
 
-            Helper::delete_file($model->url, FILE_BANK_FILE_PATH);
+            Helper::delete_file($model->url, "$model->user_id/" . FILE_BANK_FILE_PATH);
         });
     }
 }

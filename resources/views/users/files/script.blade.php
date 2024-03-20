@@ -53,13 +53,21 @@
             --}}
 
             this.on("successmultiple", function(files, response) {
-                notify("success", "{{__('messages.user.files.file_upload_success')}}");
-                location.reload();
+                notify(response.success ? "success" : "error", response.message);
+                setTimeout(() => {
+                    if(response.success) {
+                        $(location).prop('href', response.redirect_to);
+                    } else {
+                        location.reload();
+                    }
+                }, 1500);
             });
 
             this.on("errormultiple", function(files, response) {
                 notify("error", "{{__('messages.user.files.file_upload_failed')}}");
-                location.reload();
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
             });
         }
     }
@@ -100,4 +108,42 @@
             });
         @endif
     --}}
+
+    function setDeleteFileModal(fileId, fileName) {
+        $("#fileId").val(fileId);
+        var note = "{{ __('messages.user.files.delete_file_note', ['name' => 'setDeleteFileModalfileName']) }}";
+        $("#deleteFileModalNote").text(note.replace("setDeleteFileModalfileName", fileName));
+    }
+
+    function deleteFile() {
+
+        handleBaseFormSubmit("deleteFileSubmit", "{{__('messages.user.files.delete_file_submit_btn_loading_text')}}");
+
+        var route = "{{route('user.files.destroy', 'fileId')}}";
+
+        var form = $('<form>', {
+            'method': 'POST', 
+            'action': route.replace("fileId", $("#fileId").val()),
+            'style': 'display:none;'
+        });
+
+        var method = $('<input>', {
+            'name': '_method',
+            'type': 'hidden',
+            'value': 'DELETE'
+        });
+
+        var csrfToken = $('<input>', {
+            'name': '_token',
+            'type': 'hidden',
+            'value': '{{csrf_token()}}'
+        });
+
+        form.append(method, csrfToken);
+
+        $('body').append(form);
+
+        form.submit();
+    }
+
 </script>

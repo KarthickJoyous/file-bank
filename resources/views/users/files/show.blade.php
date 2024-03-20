@@ -8,6 +8,7 @@
 @endsection
 
 @section('content')
+@include('users.files.modal')
 <section class="section">
     <p class="h2 my-4">{{__('messages.user.files.file')}}</p>
     <div class="row text-center d-flex my-5">
@@ -19,5 +20,5 @@
 @endsection
 
 @section('script')
-	<script type="text/javascript"></script>
+@include('users.files.script')
 @endsection
