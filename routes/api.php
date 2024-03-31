@@ -71,7 +71,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['apiLogger']], function() {
 
 		Route::group(['middleware' => ['userAppVerification']], function() {
 
-			Route::get('', HomeController::class);
+			Route::get('home', HomeController::class);
 
 			Route::controller(UserProfileController::class)->group(function() {
 

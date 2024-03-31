@@ -7,6 +7,8 @@ use App\Models\File;
 use App\Models\Folder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\FileResource;
+use App\Http\Resources\FolderResource;
 
 class HomeController extends Controller
 {
@@ -14,15 +16,18 @@ class HomeController extends Controller
     {
         try {
 
-            $folders = Folder::withCount(['subFolders'])->where(['user_id' => auth('web')->id(), 'sub_folder' => NULL])->latest()->paginate(10);
+            $folders = Folder::withCount(['subFolders'])->where(['user_id' => request()->user()->id, 'sub_folder' => NULL])->latest()->paginate(10);
 
-            $files = File::where(['user_id' => auth('web')->id()])->latest()->paginate(10);
+            $files = File::where(['user_id' => request()->user()->id])->latest()->paginate(10);
 
-            return view('users.home')->with(compact(['folders', 'files']));
+            return $this->success('', [
+                'folders' => FolderResource::collection($folders),
+                'files' => FileResource::collection($files)
+            ]);
 
         } catch(Exception $e) {
 
-            return back()->with('error', $e->getMessage());
+            return $this->error($e->getMessage(), $e->getCode());
         }
     }
 }
