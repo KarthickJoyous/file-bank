@@ -4,17 +4,19 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Api\Auth\{RegisterController, LoginController, ForgotPasswordController, TfaLoginController};
-
 use App\Http\Controllers\Api\HomeController;
 
-use App\Http\Controllers\Api\EmailVerification\{EmailVerificationController};
-
-use App\Http\Controllers\Api\Account\{UserProfileController, ChangePasswordController, TwoFAController, LogoutController, DeleteAccountController};
+use App\Http\Controllers\Api\File\{FileController};
 
 use App\Http\Controllers\Api\Folder\{FolderController};
 
-use App\Http\Controllers\Api\File\{FileController};
+use App\Http\Controllers\Api\Passbook\PassbookController;
+
+use App\Http\Controllers\Api\EmailVerification\{EmailVerificationController};
+
+use App\Http\Controllers\Api\Auth\{RegisterController, LoginController, ForgotPasswordController, TfaLoginController};
+
+use App\Http\Controllers\Api\Account\{UserProfileController, ChangePasswordController, TwoFAController, LogoutController, DeleteAccountController};
 
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +106,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['apiLogger']], function() {
 				], 404);
 			});;
 		});
+
+		Route::get('passbook', PassbookController::class);
 
 		Route::post('logout', LogoutController::class);
 	});
