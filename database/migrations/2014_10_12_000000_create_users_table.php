@@ -27,6 +27,7 @@ return new class extends Migration
             $table->tinyInteger('tfa_status')->default(DISABLED);
             $table->boolean('tfa_verified')->default(false);
             $table->tinyInteger('status')->default(APPROVED);
+            $table->string('timezone')->default(DEFAULT_TIMEZONE);
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_password_reset_at')->nullable();
             $table->timestamps();

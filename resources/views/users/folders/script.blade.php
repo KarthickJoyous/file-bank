@@ -22,6 +22,10 @@
         return validated;
     });
 
+    function setFolderColor(color) {
+        $("#setFolderColorText").val(color);
+    }
+
     $("#setFolderColor").on('submit', function() {
         var validated = $("#setFolderColorText").val().length;
         if(validated) {

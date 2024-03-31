@@ -16,7 +16,7 @@
 		<div>
 			<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#createFolder"><i class="bi bi-patch-plus"></i>&nbsp;{{__('messages.user.folders.create_folder')}}</button>
 			@if($folders->isNotEmpty())
-				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#setFolderColor"><i class="bi bi-palette-fill"></i>&nbsp;{{__('messages.user.folders.folder_color')}}</button>
+				<button onclick="setFolderColor('{{auth('web')->user()->passbook->folder}}')" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#setFolderColor"><i class="bi bi-palette-fill"></i>&nbsp;{{__('messages.user.folders.folder_color')}}</button>
 			@endif
 		</div>
 		<div>

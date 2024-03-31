@@ -12,14 +12,27 @@ class TwoFactoryAuthentication {
 
         Mail::to($user)->send(new TfaVerificationCode($user));
 
-        return redirect()->route('user.tfaLoginForm', [
+        $message = __('messages.user.tfa_login.verification_code_send');
+
+        $data = [
             '__token' => encrypt([
                 'unique_id' => $user->unique_id,
                 'email' => $user->email,
                 'tfa_status' => ENABLED,
                 'timestamp' => now()->addMinute(1)->format('Y-m-d h:i A e')
-            ]),
-            'remember_me' => request('remember_me')
-        ])->with('success', __('messages.user.tfa_login.verification_code_send'));
+            ])
+        ];
+
+        if(request()->is('api/*')) {
+            
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+                'code' => 200,
+                'data' => $data
+            ], 200);
+        }
+
+        return redirect()->route('user.tfaLoginForm', $data + ['remember_me' => request('remember_me')])->with('success', $message);
     }
 }

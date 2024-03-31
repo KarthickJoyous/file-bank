@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\User\Folder;
+namespace App\Http\Requests\Api\Folder;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class SetFolderColorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('web')->check();
+        return request()->user()->id;
     }
 
     /**

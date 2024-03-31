@@ -16,6 +16,15 @@ class EmailVerification {
         ? __('messages.user.register.register_success')
         : __('messages.user.email_verification.verificaion_pending_note');
 
+        if(request()->is('api/*')) {
+            
+            return response()->json([
+                'success' => false,
+                'message' => $message,
+                'code' => 412
+            ], 412);
+        }
+
         return redirect()->route('user.verifyEmailForm')->with($type, $message);
     }
 }

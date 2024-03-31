@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Requests\User\Folder;
+namespace App\Http\Requests\Api\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SetFolderColorRequest extends FormRequest
+use Illuminate\Validation\Rules\Password;
+
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth('web')->check();
+        return true;
     }
 
     /**
@@ -22,7 +24,7 @@ class SetFolderColorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'folder' => ['required', 'regex:/^#([a-f0-9]{6}|[a-f0-9]{3})$/i', 'max:7']
+            'password' => ['required', 'confirmed', Password::defaults()]
         ];
     }
 }

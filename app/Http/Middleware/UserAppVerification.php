@@ -16,7 +16,7 @@ class UserAppVerification
      */
     public function handle(Request $request, Closure $next): Response
     {   
-        $user = auth('web')->user();
+        $user = $request->is('api/*') ? $request->user() : auth('web')->user();
 
         if(!$user->email_status || !$user->email_verified_at) {
 

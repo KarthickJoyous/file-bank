@@ -78,5 +78,6 @@ class Kernel extends HttpKernel
         'userAppVerification' => \App\Http\Middleware\UserAppVerification::class,
         'adminTfaVerification' => \App\Http\Middleware\AdminTwoFactorAuthentication::class,
         'adminAppVerification' => \App\Http\Middleware\AdminAppVerification::class,
+        'apiLogger' => \App\Http\Middleware\ApiLogger::class
     ];
 }

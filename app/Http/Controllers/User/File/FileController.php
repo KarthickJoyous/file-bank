@@ -49,7 +49,7 @@ class FileController extends Controller
     {
         try {
 
-            DB::transaction(function () use($request) {
+            $files = DB::transaction(function () use($request) {
 
                 foreach($request->file as $file) {
 
@@ -87,12 +87,16 @@ class FileController extends Controller
                     ]);
 
                     throw_if(!$result, new Exception(__('messages.user.files.file_upload_failed')));
+
+                    $files[] = $file;
                 }
+
+                return $files;
             });
 
             $response = [
                 'success' => true,
-                'message' => __('messages.user.files.file_upload_success'),
+                'message' => trans_choice('messages.user.files.file_upload_success', count($files)),
                 'redirect_to' => $request->folder_id ? route('user.folders.show', $request->folder_id) : route('user.files.index')
             ];
 

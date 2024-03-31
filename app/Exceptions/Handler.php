@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -30,11 +32,31 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (ThrottleRequestsException $e, $request) {
             $error =  __('messages.user.errors.too_many_attempts');
-            if ($request->expectsJson()) {
-                return response()->json(['message' => $error], 429);
+            $code = 429;
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $error,
+                    'code' => $code
+                ], $code);
             } else {
-                abort(429);
-                // return redirect()->back()->with('error', $error);
+                abort($code);
+            }
+        });
+
+        $this->renderable(function (ValidationException $e, $request) {
+            
+            if($request->is('api/*')) {
+
+                $error_code = 422;
+
+                $errors = $e->errors();
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $errors[array_key_first($errors)][0],
+                    'code' => $error_code
+                ], $error_code);
             }
         });
     }

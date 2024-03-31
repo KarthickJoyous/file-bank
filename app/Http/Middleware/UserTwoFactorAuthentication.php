@@ -33,7 +33,18 @@ class UserTwoFactorAuthentication
 
         } catch(Exception $e) {
 
-            return redirect()->route('user.login')->with('error', __('messages.user.tfa_login.forbidden'));
+            $message = __('messages.user.tfa_login.forbidden');
+
+            if($request->is('api/*')) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message,
+                    'code' => 401
+                ], 401);
+            }
+
+            return redirect()->route('user.login')->with('error', $message);
         }
     }
 }

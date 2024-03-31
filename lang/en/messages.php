@@ -41,7 +41,7 @@ return [
 			"cancel_btn_loading_text" => "Logging Out...",
 			"send_verification_code_note" => "Code not received?",
 			"send_verification_code_btn" => "Send verification code",
-			"verificaion_pending_note" => "Please verify your email to continue.",
+			"verificaion_pending_note" => "Please verify your email to continue. Code sent to email.",
 			"send_verification_code_failed" => "Send verification code failed. (User ID : :user_id | Email : :email)",
 			"send_verification_code_success" => "Verification code send.",
 			"code_expired" => "Verification code is expired. New code send to your email.",
@@ -68,7 +68,8 @@ return [
 			"invalid_credentials" => "Invalid Email / Password.",
 			"login_success" => "Login Success.",
 			"password_space_validation_message" => "Space are not allowed in passwords.",
-			"forgot_password" => "Forgot Password ?"
+			"forgot_password" => "Forgot Password ?",
+			"something_went_wrong" => "Something went wrong. Please try again."
 		],
 
 		"forgot_password" => [
@@ -80,6 +81,7 @@ return [
 			"submit_btn" => "Send Link",
 			"submit_btn_loading_text" => "Sending Link...",
 			"send_link_success" => "Link sent to your email.",
+			"code_link_success" => "Code sent to your email.",
 			"link_expired" => "Link is expired. New link send to your email.",
 			"login_note" => "Already have an account?",
 			"login_btn" => "Login"
@@ -113,12 +115,12 @@ return [
 			"submit_btn_loading_text" => "Verifiying...",
 			"send_verification_code_note" => "Code not received?",
 			"send_verification_code_btn" => "Send verification code",
-			"verification_code_send" => "Verifcation code send to your email.",
+			"verification_code_send" => "TFA login enabled. Verifcation code send to your email.",
 			"send_verification_code_failed" => "Send verification code failed. (User ID : :user_id | Email : :email)",
 			"send_verification_code_success" => "Verification code send.",
 			"code_expired" => "Verification code is expired. New code send to your email.",
 			"verificaion_failed" => "Verification Failed. Please try again.",
-			"verificaion_success" => "Verification Success.",
+			"verificaion_success" => "Verification Success. Logged In.",
 			"verification_code_space_validation_message" => "Space not allowed in verification code.",
 			"forbidden" => "Please login to continue."
 		],
@@ -191,6 +193,7 @@ return [
 			"delete_account_note" => "Note : Once you proceed with the deletion of your account, please be aware that all associated data will be permanently lost and cannot be recovered. This includes your profile information, settings, files, and any other data linked to your account.",
 			"delete_account_failed" => "Account deletion failed. Please try again.",
 			"delete_account_success" => "Account has been deleted.",
+			"storage_note" => "Remaining :remaining of :total"
 		],
 
 		"common" => [
@@ -235,6 +238,14 @@ return [
 				"body" => "You're receiving this email because you requested a password reset. To reset your password and regain access to your account, simply click on the link below:",
 				"ignore_note" => "If you didn't initiate this request, kindly disregard this email.",
 				"btn_text" => "Reset Password"
+			],
+
+			"password_reset_code" => [
+				"welcome_note" => "Hello :name,",
+				"subject" => "Password Reset Verification Code",
+				"body" => "You're receiving this email because you requested a password reset. Please find the verification code below to reset your password and regain access to your account.",
+				"title" => "Verification Code: ",
+				"btn_text" => "Visit Website"
 			],
 
 			"password_reset_success" => [
@@ -285,7 +296,8 @@ return [
 			"choose_color" => "Choose your color",
 			"set_folder_color_submit_btn_loading_text" => "Setting folder color...",
 			"set_folder_color_success" => "Folder color updated.",
-			"set_folder_color_failed" => "Set folder color failed. Please try again."
+			"set_folder_color_failed" => "Set folder color failed. Please try again.",
+			"not_found" => "Folder not found.",
 		],
 
 		"files" => [
@@ -304,7 +316,7 @@ return [
 			"upload_file_note" => "The option to specify a file name is available; in case one is not provided, a random name will be generated automatically.",
 			"upload_file_submit_btn_loading_text" => "Uploading File...",
 			"file_upload_failed" => "File upload failed. Please try again.",
-			"file_upload_success" => "File uploaded.",
+			"file_upload_success" => "{1} :count file uploaded.|[2,*] :count files uploaded.",
 			"files_required" => "Please choose files.",
 			"delete" => "Delete",
 			"delete_file" => "Delete File",
@@ -312,6 +324,7 @@ return [
 			"delete_file_submit_btn_loading_text" => "Deleting File...",
 			"deletion_failed" => "File deletion failed. Please try again.",
 			"deletion_success" => "File deleted.",
+			"not_found" => "File not found.",
 		]
 		],
 
@@ -383,7 +396,7 @@ return [
 				"send_verification_code_success" => "Verification code send.",
 				"code_expired" => "Verification code is expired. New code send to your email.",
 				"verificaion_failed" => "Verification Failed. Please try again.",
-				"verificaion_success" => "Verification Success.",
+				"verificaion_success" => "Verification Success. Logged In.",
 				"verification_code_space_validation_message" => "Space not allowed in verification code.",
 				"forbidden" => "Please login to continue."
 			],

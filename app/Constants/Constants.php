@@ -15,6 +15,8 @@ define('ENABLED', 1);
 define('HIDDEN', 0);
 define('VISIBLE', 1);
 
+define('DEFAULT_TIMEZONE', 'Asia/Kolkata');
+
 // File paths
 
 define('USER_FILE_PATH', 'users');

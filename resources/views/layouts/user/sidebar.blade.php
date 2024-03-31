@@ -7,7 +7,7 @@
           class="nav-link {{request()->url() == route('user.dashboard') ? '' : 'collapsed'}}" 
           href="{{route('user.dashboard')}}"
         >
-          <i class="bi bi-grid"></i>
+          <i class="bi bi-house"></i>
           <span>{{__('messages.user.sidebar.home')}}</span>
         </a>
       </li><!-- End Home Nav -->
